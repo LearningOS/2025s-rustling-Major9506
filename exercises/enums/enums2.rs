@@ -1,13 +1,12 @@
 // enums2.rs
-//
-// Execute `rustlings hint enums2` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
+// This is a more advanced version of enums.rs, where we define a struct for each variant,
 
 #[derive(Debug)]
 enum Message {
-    // TODO: define the different variants used below
+    Move { x: i32, y: i32 },
+    Echo(String),
+    ChangeColor(u8, u8, u8),
+    Quit,
 }
 
 impl Message {
