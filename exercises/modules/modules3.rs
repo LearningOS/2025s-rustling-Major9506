@@ -5,7 +5,6 @@
 // SystemTime and UNIX_EPOCH from the std::time module. Bonus style points if
 // you can do it with one line!
 
-// TODO: Complete this use statement
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
