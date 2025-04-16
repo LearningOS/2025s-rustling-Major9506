@@ -2,7 +2,6 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -70,13 +69,43 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+    where T: Ord
 	{
 		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+
+        let mut cursor_a = list_a.start;
+        let mut cursor_b = list_b.start;
+
+        let mut merged_list = LinkedList::new();
+        let mut cursor_merged = &mut merged_list.start;
+
+        while let (Some(mut node_a), Some(mut node_b)) = (cursor_a, cursor_b) {
+            if unsafe { &node_a.as_ref().val } < unsafe { &node_b.as_ref().val } {
+                let mut next = None;
+                std::mem::swap(&mut next, &mut unsafe { node_a.as_mut().next });
+                *cursor_merged = cursor_a;
+                let node_a_mut: &mut Node<T> = unsafe { node_a.as_mut() };
+                cursor_merged = &mut node_a_mut.next;
+                cursor_a = next;
+            } else {
+                let mut next = None;
+                std::mem::swap(&mut next, &mut unsafe { node_b.as_mut().next });
+                *cursor_merged = cursor_b;
+                let node_b_mut: &mut Node<T> = unsafe { node_b.as_mut() };
+                cursor_merged = &mut node_b_mut.next;
+                cursor_b = next;
+            }
         }
+
+        if cursor_a.is_some() {
+            *cursor_merged = cursor_a;
+        }
+
+        if cursor_b.is_some() {
+            *cursor_merged = cursor_b;
+        }
+		
+        merged_list
 	}
 }
 
